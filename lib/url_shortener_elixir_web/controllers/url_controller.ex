@@ -42,8 +42,7 @@ defmodule UrlShortenerElixirWeb.UrlController do
   end
 
   def redirect_to_long_url(conn, %{"shorten_url" => shorten_url}) do
-    url = Link.find_long_url(shorten_url)
-
+    url = LinkCache.Cache.fetch(shorten_url, fn -> Link.find_long_url(shorten_url) end)
     redirect(conn, external: url)
   end
 end
