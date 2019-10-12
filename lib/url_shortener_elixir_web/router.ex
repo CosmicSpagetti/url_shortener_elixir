@@ -7,5 +7,10 @@ defmodule UrlShortenerElixirWeb.Router do
 
   scope "/api", UrlShortenerElixirWeb do
     pipe_through :api
+    resources "/urls", UrlController, except: [:new, :edit]
+  end
+
+  scope "/redirect", UrlShortenerElixirWeb do
+    get "/:shorten_url", UrlController, :redirect_to_long_url
   end
 end
